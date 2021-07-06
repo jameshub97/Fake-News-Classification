@@ -25,21 +25,8 @@ dataset = true.append(fake)
 print(len(dataset))
 import random
 
-# print(dataset.value)
-
-
-# x = dataset.value
-# y = dataset.sentiment
 print("success")
 import matplotlib.pyplot as plt
-
-# fig, ax = plt.subplots(1, 1)
-
-# sns.regplot(x=x, y=y, y_jitter=0.03,logistic=True, x_jitter=.1, n_boot=500, data=dataset)
-# ax.grid(b=True, which='minor', color='w', linewidth=0.5)
-# plt.show()
-
-# storing size of dataset for tokenisation
 origial_size = dataset.size
 half_size = int(dataset.size / 2)
 
@@ -51,9 +38,6 @@ print(dataset.head)
 
 from scipy import stats
 
-# g.map(plt.errorbar, "size", "total_bill", "CI", marker="o")
-
-# corpus, (storage of text)
 corpus = []
 # removal of stop words and stemming, then added to corpus
 for i in range(0, 1056):
@@ -87,21 +71,21 @@ import matplotlib.pyplot as plt
 from sklearn.feature_selection import chi2
 
 tfidf = CountVectorizer(max_features=30000, ngram_range=(1, 1))
-# X_tfidf = tfidf.fit_transform(dataset.title)
-# # Chi2 Graph
-# y = dataset.sentiment
-# chi2score = chi2(X_tfidf, y)[0]
-# plt.figure(figsize=(16, 8))
-# scores = list(zip(tfidf.get_feature_names(), chi2score))
-# chi2 = sorted(scores, key=lambda x: x[1])
-# topchi2 = list(zip(*chi2[-40:]))
-# x = range(len(topchi2[1]))
-# labels = topchi2[0]
-# plt.barh(x, topchi2[1], align='center', alpha=0.5)
-# plt.plot(topchi2[1], x, '-o', markersize=5, alpha=0.8)
-# plt.yticks(x, labels)
-# plt.xlabel('$\chi^2$')
-# plt.show();
+X_tfidf = tfidf.fit_transform(dataset.title)
+# Chi2 Graph
+y = dataset.sentiment
+chi2score = chi2(X_tfidf, y)[0]
+plt.figure(figsize=(16, 8))
+scores = list(zip(tfidf.get_feature_names(), chi2score))
+chi2 = sorted(scores, key=lambda x: x[1])
+topchi2 = list(zip(*chi2[-40:]))
+x = range(len(topchi2[1]))
+labels = topchi2[0]
+plt.barh(x, topchi2[1], align='center', alpha=0.5)
+plt.plot(topchi2[1], x, '-o', markersize=5, alpha=0.8)
+plt.yticks(x, labels)
+plt.xlabel('$\chi^2$')
+plt.show();
 import timeit
 import time
 
@@ -221,20 +205,6 @@ EndDTbag = time.time()
 DTtime = round(EndDT - StartDT, 2)
 DTboost = round(EndDTboost - StartDTboost, 2)
 DTbag = round(EndDTbag - StartDTbag, 2)
-#
-# import graphviz
-# from sklearn.tree import DecisionTreeClassifier
-# from sklearn import tree
-# import os
-# os.environ["PATH"] += os.pathsep + 'D:/Program Files (x86)/Graphviz2.38/bin/'
-# tree_classifier = DecisionTreeClassifier(max_depth=5)
-# tree_classifier.fit(X_train, y_train)
-#
-# dot_data = tree.export_graphviz(tree_classifier, class_names=['0', '1'], out_file=None)
-# graph = graphviz.Source(dot_data).view()
-#
-
-# https://stackoverflow.com/questions/35064304/runtimeerror-make-sure-the-graphviz-executables-are-on-your-systems-path-aft
 
 
 cmDT = confusion_matrix(y_test, y_predD)
@@ -344,12 +314,6 @@ print(classification_report(y_test, y_predK, target_names=['negative', 'positive
 
 import matplotlib.pyplot as plt
 
-# total_runtime = nbms + boostedms + baggedms + LRtime + LRboost + LRbag + svcboosttime + svcbagtime + DTtime + DTboost + DTbag
-# print(total_runtime)
-# print(nbms, boostedms, baggedms, LRtime, LRboost, LRbag,svctime, svcboosttime, svcbagtime,DTtime, DTboost, DTbag)
-
-# data = {'Name': ['Total', 'Naive Bayes', 'NB - Boosted', 'NB - Bagged', 'Logistic Regression(LR', 'LR Boosted', 'LRBag', 'SVM', 'SVM Bagged','SVMBoosted', 'Decision Tree','Decistion Tree Boosted', 'DTBagged'],
-#         'Amount': [total_runtime, nbms, boostedms, baggedms, LRtime, LRboost, LRbag, svctime, svcboosttime, svcbagtime, DTtime,DTboost,DTbag]}
 
 
 svctime = round(endsvc - Startsvc)
@@ -371,20 +335,6 @@ plt.grid()
 plt.show()
 print(index)
 ax = df.plot.barh()
-
-# df = pd.DataFrame({"Apple" : [2,3,4,1], "Banana" : [4,2,1,2]})
-#
-#
-# df = pd.DataFrame(data)
-# df.plot.barh(figsize=(10,20))
-# y = df['Amount']
-# df = df.set_index('Name').rename_axis(None)
-# for index, value in enumerate(y):
-#     plt.text(value, index, str(value))
-# plt.title("Runtime of Classifiers on Dataset 1")
-# plt.ylabel("Classifier")
-# plt.xlabel("time(s)")
-#
 print(df)
 
 fig, (ax1, ax2, ax3, ax4, ax5, ax6,ax7,ax8, ax9, ax10, ax11, ax12, ax13, ax14, ax15) = plt.subplots(ncols=3, nrows=4, sharey=True)
